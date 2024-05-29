@@ -1,0 +1,19 @@
+stages:
+  - docs
+
+pages:
+  image: python:3.8.10
+  stage: docs
+  tags:
+    - development-env
+  environment: development
+  script:
+    - pip install mkdocs-material
+    - mkdocs build --site-dir public
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
+    - tags
+    - /(^release\/([0-9]+)\.([0-9]+))/

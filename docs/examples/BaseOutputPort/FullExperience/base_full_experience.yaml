@@ -1,0 +1,437 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: op-base-full-experience-template.1
+  title: Base Full Experience Output Port
+  description: Gives a starting point to define an Output Port template
+  tags:
+    - output-port
+spec:
+  owner: agilelab
+  type: outputport
+  parameters:
+    - title: Component metadata
+      description: Basic information for this component.
+      required:
+        - name
+        - domain
+        - dataproduct
+        - description
+      properties:
+        name:
+          title: Name
+          type: string
+          description: Required name used for display purposes
+          ui:field: EntityNamePicker
+          default: Output Port
+          ui:options:
+            allowArbitraryValues: true
+        fullyQualifiedName:
+          title: Fully Qualified Name
+          type: string
+          description: Output port fully qualified name
+        description:
+          title: Description
+          type: string
+          description: Help others understand what this Output Port is for
+          default: Output Port that exposes information of this Data Product to users and other data products.
+        domain:
+          title: Domain
+          type: string
+          description: Domain of the Data Product this Output Port belongs to
+          ui:field: EntityPicker
+          ui:options:
+            allowArbitraryValues: false
+            allowedKinds:
+              - Domain
+        dataproduct:
+          title: Data Product
+          type: string
+          description: Data Product this Output Port belongs to
+          ui:field: EntityPicker
+          ui:filter:
+            - fieldName: domain
+              entityPath: spec.domain
+          ui:options:
+            allowArbitraryValues: false
+            allowedKinds:
+              - System
+        identifier:
+          title: Identifier
+          type: string
+          description: A unique identifier for the entity inside the domain. It will not be editable after creation and is expected to be a string that is sequences of [a-zA-Z] separated by any of [-_]
+          ui:field: ComponentIdentifierPicker
+          ui:options:
+            allowArbitraryValues: false
+        developmentGroup:
+          title: Development Group
+          type: string
+          description: Automatically selected from the Data Product metadata. Data Product development group.
+          ui:field: EntitySelectionPicker
+          ui:fieldName: dataproduct
+          ui:property: spec.owner
+          ui:options:
+            allowArbitraryValues:
+              false
+        dependsOn:
+          title: Depends on
+          type: array
+          default: []
+          items:
+            type: string
+            ui:field: EntityRelationsPicker
+            ui:fieldName: dataproduct
+            relation: hasPart
+          description: An Output Port could depend on other Output Ports or storage areas
+        tags:
+          title: Tags
+          type: array
+          description: Tags for the component
+          default: [ ]
+          items:
+            type: string
+
+    - title: Terms & Conditions and SLA
+      description: Terms & Conditions and Service Level Agreement information for this component.
+      required:
+        - termsAndConditions
+        - intervalOfChange
+        - timeliness
+        - upTime
+      properties:
+        termsAndConditions:
+          title: Terms and Conditions
+          type: string
+          description: Required. Terms and Conditions that apply to the data.
+          default: Can be used for production purposes.
+        intervalOfChange:
+          title: Interval of change
+          type: string
+          description: Required. How often the data is refreshed.
+          default: 2BD
+        timeliness:
+          title: Timeliness
+          type: string
+          description: Required. Timeliness of the data.
+          default: 2BD
+        upTime:
+          title: Uptime
+          type: string
+          description: Required. Uptime of the Output Port.
+          default: 99.9%
+
+    - title: Data Sharing Agreement
+      description: Update the Data Sharing Agreement clauses for this component.
+      required:
+        - purpose
+        - billing
+        - security
+        - intendedUsage
+        - limitations
+        - lifeCycle
+        - confidentiality
+      properties:
+        purpose:
+          title: Purpose
+          type: string
+          description: Required. Purpose of the data.
+          default: Foundational data for downstream use cases.
+        billing:
+          title: Billing
+          type: string
+          description: Required. Billing applied to data usage.
+          default: None.
+        security:
+          title: Security
+          type: string
+          description: Required. Security policies that apply to the data.
+          default: Platform standard security policies.
+        intendedUsage:
+          title: Intended Usage
+          type: string
+          description: Required. Intended usage for the data.
+          default: Any downstream use cases.
+        limitations:
+          title: Limitations
+          type: string
+          description: Required. Limitations of the data.
+          default: Needs joining with other datasets (eg customer data) for most analytical use cases.
+        lifeCycle:
+          title: Lifecycle
+          type: string
+          description: Required. Lifecycle of the data.
+          default: Data loaded every two days and typically never deleted.
+        confidentiality:
+          title: Confidentiality
+          type: string
+          description: Required. Confidentiality of the data.
+          default: None.
+
+    - title: Data contract schema
+      description: Definition of the columns of the table. Primitive data types supported.
+      properties:
+        schemaDefinition:
+          type: object
+          ui:options:
+            displayTitle: false
+          properties:
+            schemaColumns:
+              title: Column Definitions
+              type: array
+              ui:ArrayFieldTemplate: ArrayTableTemplate
+              items:
+                type: object
+                ui:ObjectFieldTemplate: TableRowTemplate
+                required:
+                  - name
+                  - dataType
+                properties:
+                  name:
+                    type: string
+                    title: Name
+                  description:
+                    type: string
+                    title: Description
+                  dataType:
+                    type: string
+                    default: INT
+                    title: Data Type
+                    enum:
+                      - TINYINT
+                      - SMALLINT
+                      - INT
+                      - BIGINT
+                      - DOUBLE
+                      - DECIMAL
+                      - TIMESTAMP
+                      - DATE
+                      - STRING
+                      - TEXT
+                      - CHAR
+                      - VARCHAR
+                      - BOOLEAN
+                      - ARRAY
+                  constraint:
+                    type: string
+                    title: Constraint
+                    default: (no constraint)
+                    enum:
+                      - PRIMARY_KEY
+                      - NOT_NULL
+                      - UNIQUE
+                      - (no constraint)
+                allOf:
+                  - if:
+                      properties:
+                        dataType:
+                          const: ARRAY
+                    then:
+                      required:
+                        - arrayDataType
+                      properties:
+                        arrayDataType:
+                          title: Array Data Type
+                          description: Data type of the array elements
+                          type: string
+                          default: INT
+                          enum:
+                            - TINYINT
+                            - SMALLINT
+                            - INT
+                            - BIGINT
+                            - DOUBLE
+                            - DECIMAL
+                            - TIMESTAMP
+                            - DATE
+                            - STRING
+                            - TEXT
+                            - CHAR
+                            - VARCHAR
+                            - BOOLEAN
+                            - ARRAY
+                      allOf:
+                        - if:
+                            properties:
+                              arrayDataType:
+                                oneOf:
+                                  - const: TEXT
+                                  - const: VARCHAR
+                                  - const: CHAR
+                          then:
+                            properties:
+                              dataLength:
+                                title: Column Length
+                                type: integer
+                                description: Maximum length of column row
+                                default: 65535
+                            required:
+                              - dataLength
+                        - if:
+                            properties:
+                              arrayDataType:
+                                oneOf:
+                                  - const: DECIMAL
+                          then:
+                            properties:
+                              precision:
+                                title: Precision
+                                type: integer
+                                description: Precision of the numeric data type
+                                minimum: 1
+                                maximum: 38
+                                default: 38
+                              scale:
+                                title: Scale
+                                type: integer
+                                description: Scale of the numeric data type; cannot be greater than precision minus 1
+                                minimum: 0
+                                maximum: 37
+                                default: 0
+                            required:
+                              - precision
+                              - scale
+                  - if:
+                      properties:
+                        dataType:
+                          oneOf:
+                            - const: TEXT
+                            - const: VARCHAR
+                            - const: CHAR
+                    then:
+                      properties:
+                        dataLength:
+                          title: Column Length
+                          type: integer
+                          description: Maximum length of column row
+                          default: 65535
+                      required:
+                        - dataLength
+                  - if:
+                      properties:
+                        dataType:
+                          oneOf:
+                            - const: DECIMAL
+                    then:
+                      properties:
+                        precision:
+                          title: Precision
+                          type: integer
+                          description: Precision of the numeric data type
+                          minimum: 1
+                          maximum: 38
+                          default: 38
+                        scale:
+                          title: Scale
+                          type: integer
+                          description: Scale of the numeric data type; cannot be greater than precision minus 1
+                          minimum: 0
+                          maximum: 37
+                          default: 0
+                      required:
+                        - precision
+                        - scale
+                  - if: true
+                    then:
+                      properties:
+                        businessTerms:
+                          title: Business Terms
+                          type: array
+                          description: Multiple selection for fixed tags
+                          uniqueItems: true
+                          ui:style:
+                            minWidth: 400
+                          items:
+                            type: string
+                            enum:
+                              - Raw
+                              - Derived
+                              - Metadata
+                              - Identifier
+                              - Dimension
+                              - Fact
+
+    - title: Provide Output port deployment information
+      description: |-
+        Customize this section and further sections based on the requirements for the specific technology you're using.
+        Follow the best practices guidelines to understand which fields you should or should not add.
+        In this particular case, we're asking only for two fields with a default value so that the user is not forced to
+        input them if not needed right away. They can always be edited at a later point using the Editor Wizard
+      required:
+        - databaseName
+        - tableName
+      properties:
+        databaseName:
+          title: Database name
+          type: string
+          description: Database name where the Output Port table will be created
+        tableName:
+          title: Table name
+          type: string
+          description: Table name created by this component to act as Output Port
+
+  steps:
+    - id: template
+      name: Fetch Skeleton + Template
+      action: fetch:template
+      input:
+        url: ./skeleton
+        targetPath: '.'
+        values:
+          name: '${{ parameters.name }}'
+          fullyQualifiedName: '${{ parameters.fullyQualifiedName }}'
+          description: '${{ parameters.description }}'
+          domain: '${{ parameters.domain }}'
+          dataproduct: '${{ parameters.dataproduct }}'
+          identifier: '${{ parameters.identifier }}'
+          developmentGroup: '${{ parameters.developmentGroup }}'
+          dependsOn: '${{ parameters.dependsOn }}'
+          tags: '${{ parameters.tags }}'
+          processDescription: '${{ parameters.processDescription }}'
+          intervalOfChange: '${{ parameters.intervalOfChange }}'
+          timeliness: '${{ parameters.timeliness }}'
+          upTime: '${{ parameters.upTime }}'
+          termsAndConditions: '${{ parameters.termsAndConditions }}'
+          endpoint: '${{ parameters.endpoint }}'
+          schemaColumns: '${{ parameters.schemaDefinition.schemaColumns }}'
+          purpose: '${{ parameters.purpose }}'
+          billing: '${{ parameters.billing }}'
+          security: '${{ parameters.security }}'
+          intendedUsage: '${{ parameters.intendedUsage }}'
+          limitations: '${{ parameters.limitations }}'
+          lifeCycle: '${{ parameters.lifeCycle }}'
+          confidentiality: '${{ parameters.confidentiality }}'
+          databaseName: '${{ parameters.databaseName }}'
+          tableName: '${{ parameters.tableName }}'
+          creationDate: '${{ parameters.creationDate }}'
+          useCaseTemplateId: urn:dmb:utm:op-base-full-experience-template:0.0.0
+          infrastructureTemplateId: urn:dmb:itm:output-port-tech-adapter:0
+          destination: &destination 'gitlab.com?owner=<PUT-HERE-YOUR-GITLAB-WITBOOST-GROUP>%2F${{ parameters.domain | replace(r/domain:| |-/, "") }}%2F${{ parameters.dataproduct.split(".")[1] | replace(r/ |-/g, "") }}&repo=${{ parameters.name.split(" ") | join("") | lower }}'
+          rootDirectory: '.'
+          displayName: '${{ parameters.displayName }}'
+          artifact_id: '${{ parameters.name }}'
+          useCaseTemplateVersion: 0.0.0
+
+    - id: publish
+      name: Publish
+      action: witboostMeshComponent:publish:gitlab
+      input:
+        allowedHosts: ['gitlab.com']
+        description: 'This is ${{ parameters.name }}'
+        repoUrl: *destination
+        rootDirectory: '.'
+        dataproduct: '${{ parameters.dataproduct }}'
+
+    - id: register
+      name: Register
+      action: catalog:register
+      input:
+        repoContentsUrl: '${{ steps.publish.output.repoContentsUrl }}'
+        catalogInfoPath: '/catalog-info.yaml'
+
+  output:
+    links:
+      - title: Repository
+        url: '${{ steps.publish.output.remoteUrl }}'
+      - title: Open in catalog
+        icon: catalog
+        entityRef: '${{ steps.register.output.entityRef }}'

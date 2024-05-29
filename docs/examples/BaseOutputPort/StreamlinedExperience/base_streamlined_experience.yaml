@@ -1,0 +1,209 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: base-streamlined-experience-template.1
+  title: Minimal Information Output Port
+  description: Gives a starting point to define an Output Port template that streamlines the creation experience
+  tags:
+    - output-port
+spec:
+  owner: agilelab
+  type: outputport
+  parameters:
+    - title: Component metadata
+      description: Basic information for this component.
+      required:
+        - name
+        - domain
+        - dataproduct
+        - description
+      properties:
+        name:
+          title: Name
+          type: string
+          description: Required name used for display purposes
+          ui:field: EntityNamePicker
+          default: Output Port
+          ui:options:
+            allowArbitraryValues: true
+        fullyQualifiedName:
+          title: Fully Qualified Name
+          type: string
+          description: Output port fully qualified name
+        description:
+          title: Description
+          type: string
+          description: Help others understand what this Output Port is for
+          default: Output Port that exposes information of this Data Product to users and other data products.
+        domain:
+          title: Domain
+          type: string
+          description: Domain of the Data Product this Output Port belongs to
+          ui:field: EntityPicker
+          ui:options:
+            allowArbitraryValues: false
+            allowedKinds:
+              - Domain
+        dataproduct:
+          title: Data Product
+          type: string
+          description: Data Product this Output Port belongs to
+          ui:field: EntityPicker
+          ui:filter:
+            - fieldName: domain
+              entityPath: spec.domain
+          ui:options:
+            allowArbitraryValues: false
+            allowedKinds:
+              - System
+        identifier:
+          title: Identifier
+          type: string
+          description: A unique identifier for the entity inside the domain. It will not be editable after creation and is expected to be a string that is sequences of [a-zA-Z] separated by any of [-_]
+          ui:field: ComponentIdentifierPicker
+          ui:options:
+            allowArbitraryValues: false
+        developmentGroup:
+          title: Development Group
+          type: string
+          description: Data Product development group
+          ui:field: EntitySelectionPicker
+          ui:fieldName: dataproduct
+          ui:property: spec.owner
+          ui:options:
+            allowArbitraryValues: false
+        dependsOn:
+          title: Depends on
+          type: array
+          default: []
+          items:
+            type: string
+            ui:field: EntityRelationsPicker
+            ui:fieldName: dataproduct
+            relation: hasPart
+          description: An Output Port could depend on other Output Ports or storage areas
+
+    - title: Data contract schema
+      description: |
+        Choose the schema for this Output Port that will be inserted on the Data Contract. 
+        You can either inherit it from an existing component of a certain kind, or leave it empty
+        and add it manually at a later stage using Witboost Editor Wizard.
+      required: [ inheritSchema ]
+      properties:
+        inheritSchema:
+          title: Choose one
+          type: boolean
+          ui:widget: select
+          default: false
+          oneOf:
+            - const: true
+              title: Inherit schema from an existing component
+            - const: false
+              title: Leave schema empty
+      dependencies:
+        inheritSchema:
+          oneOf:
+            - properties:
+                inheritSchema:
+                  const: false
+            - required:
+                - schemaDefinition
+              properties:
+                inheritSchema:
+                  const: true
+                schemaDefinition:
+                  ui:options:
+                    displayTitle: false
+                  type: object
+                  required:
+                    - inheritSchemaComponent
+                    - schemaColumns
+                  properties:
+                    inheritSchemaComponent:
+                      title: Storage component
+                      type: string
+                      description: Choose an storage component from which the schema will be inherited.
+                      ui:field: EntityRelationsPicker
+                      ui:filters:
+                        - key: spec.type
+                          value: storage # You can remove it or modify it in order to choose all or a different kind of components
+                      ui:fieldName: dataproduct
+                      relation: hasPart
+                    schemaColumns:
+                      title: Is schema selected?
+                      ui:field: EntitySelectionPicker
+                      ui:fieldName: schemaDefinition.inheritSchemaComponent
+                      ui:property: spec.mesh.specific.tableSchema # Modify it based on where the schema is located on your source entity
+
+    - title: Provide Output port deployment information
+      description: |-
+        Customize this section and further sections based on the requirements for the specific technology you're using.
+        Follow the best practices guidelines to understand which fields you should or should not add.
+        In this particular case, we're asking only for two fields with a default value so that the user is not forced to
+        input them if not needed right away. They can always be edited at a later point using the Editor Wizard
+      properties:
+        databaseName:
+          title: Database name
+          type: string
+          default: data_product_db
+          description: Database name where the Output Port table will be created
+        tableName:
+          title: Table name
+          type: string
+          default: output_port_table
+          description: Table name created by this component to act as Output Port
+
+  steps:
+    - id: template
+      name: Fetch Skeleton + Template
+      action: fetch:template
+      input:
+        url: ./skeleton
+        targetPath: '.'
+        values:
+          name: '${{ parameters.name }}'
+          fullyQualifiedName: '${{ parameters.fullyQualifiedName }}'
+          description: '${{ parameters.description }}'
+          domain: '${{ parameters.domain }}'
+          dataproduct: '${{ parameters.dataproduct }}'
+          identifier: '${{ parameters.identifier }}'
+          developmentGroup: '${{ parameters.developmentGroup }}'
+          dependsOn: '${{ parameters.dependsOn }}'
+          inheritSchema: '${{ parameters.inheritSchema }}'
+          schemaColumns: '${{ parameters.schemaDefinition.schemaColumns }}'
+          databaseName: '${{ parameters.databaseName }}'
+          tableName: '${{ parameters.tableName }}'
+          creationDate: '${{ parameters.creationDate }}'
+          useCaseTemplateId: urn:dmb:utm:base-streamlined-experience-template:0.0.0
+          infrastructureTemplateId: urn:dmb:itm:output-port-tech-adapter:0
+          destination: &destination 'gitlab.com?owner=<PUT-HERE-YOUR-GITLAB-WITBOOST-GROUP>%2F${{ parameters.domain | replace(r/domain:| |-/, "") }}%2F${{ parameters.dataproduct.split(".")[1] | replace(r/ |-/g, "") }}&repo=${{ parameters.name.split(" ") | join("") | lower }}'
+          owner: '<PUT-HERE-YOUR-GITLAB-WITBOOST-GROUP>/${{ parameters.domain | replace(r/domain:| |-/, "") }}/${{ parameters.dataproduct.split(".")[1] | replace(r/ |-/g, "") }}'
+          repo: '${{ parameters.name.split(" ") | join("") | lower }}'
+          displayName: '${{ parameters.displayName }}'
+          artifact_id: '${{ parameters.name }}'
+          useCaseTemplateVersion: 0.0.0
+
+    - id: publish
+      name: Publish
+      action: witboostMeshComponent:publish:gitlab
+      input:
+        allowedHosts: ['gitlab.com']
+        description: 'This is ${{ parameters.name }}'
+        repoUrl: *destination
+        rootDirectory: '.'
+        dataproduct: '${{ parameters.dataproduct }}'
+
+    - id: register
+      name: Register
+      action: catalog:register
+      input:
+        repoContentsUrl: '${{ steps.publish.output.repoContentsUrl }}'
+        catalogInfoPath: '/catalog-info.yaml'
+
+  output:
+    links:
+      - title: Repository
+        url: '${{ steps.publish.output.remoteUrl }}'
+      - title: Open in catalog
+        icon: catalog
+        entityRef: '${{ steps.register.output.entityRef }}'

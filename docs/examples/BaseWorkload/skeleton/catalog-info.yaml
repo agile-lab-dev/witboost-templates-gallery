@@ -1,0 +1,50 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ${{ values.identifier }}
+  description: ${{ values.description | dump }}
+  annotations:
+    gitlab.com/project-slug: ${{ values.owner + "/" + values.repo }}
+    backstage.io/techdocs-ref: dir:.
+  tags:
+    - workload
+spec:
+  type: workload
+  lifecycle: experimental
+  owner: ${{ values.developmentGroup | dump }}
+  system: ${{ values.dataproduct | dump }}
+  domain: ${{ values.domain | dump }}
+  mesh:
+    name: ${{ values.name | dump }}
+    fullyQualifiedName: ${{ values.fullyQualifiedName | dump }}
+    description: ${{ values.description | dump }}
+    kind: workload
+    version: ${{ values.identifier.split(".")[2] + ".0.0" }}
+    infrastructureTemplateId: ${{ values.infrastructureTemplateId }}
+    useCaseTemplateId: ${{ values.useCaseTemplateId }}
+    dependsOn: {% if values.dependsOn | length > 0 %}{% for i in values.dependsOn %}
+      - ${{ i }}{% endfor %}{% else %}[]{% endif %}
+    platform: <WORKLOAD PLATFORM PLACEHOLDER>
+    technology: <WORKLOAD TECHNOLOGY PLACEHOLDER>
+    workloadType: <WORKLOAD TYPE PLACEHOLDER>
+    connectionType: <WORKLOAD CONNECTION TYPE PLACEHOLDER>
+    tags: {% if values.tags | length > 0 %}{% for i in values.tags %}
+      - tagFQN: ${{ i }}
+        source: Tag
+        labelType: Manual
+        state: Confirmed{% endfor %}{% else %}[]{% endif %}
+    readsFrom: {% if values.readsFrom | length > 0 %}{% for i in values.readsFrom %}
+      - ${{ i }}{% endfor %}{% else %}[]{% endif %}
+    specific:
+      driverCores: ${{ values.driverCores }}
+      driverMemory: ${{ values.driverMemory }}
+      executorCores: ${{ values.executorCores }}
+      executorMemory: ${{ values.executorMemory }}
+      numExecutors: ${{ values.numExecutors }}
+      schedule: {% if values.enableScheduling %}
+        cronExpression: ${{ values.cronExpression }}
+        startDate: ${{ values.startDate }}
+        endDate: ${{ values.endDate }}
+      {% else %}null{% endif %}
+
+

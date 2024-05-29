@@ -1,0 +1,30 @@
+schema: {% if values.schemaColumns | length > 0 %}
+{%- for column in values.schemaColumns %}
+  {%- set primitiveType = column.arrayDataType if column.dataType == "ARRAY" else column.dataType %}
+  - name: ${{ column.name }}
+    dataType: ${{ column.dataType }}
+{%- if column.description %}
+    description: ${{ column.description }}
+{%- endif %}
+{%- if column.constraint and column.constraint != "(no constraint)" %}
+    constraint: ${{ column.constraint }}
+{%- endif %}
+{%- if primitiveType in ["TEXT", "VARCHAR", "CHAR"] and column.dataLength %}
+    dataLength: ${{ column.dataLength }}
+{%- endif %}
+{%- if primitiveType == "DECIMAL" and column.precision %}
+    precision: ${{ column.precision }}
+{%- endif %}
+{%- if primitiveType == "DECIMAL" and column.precision %}
+    scale: ${{ column.scale }}
+{%- endif %}
+{%- if column.dataType == "ARRAY" and column.arrayDataType %}
+    arrayDataType: ${{ column.arrayDataType }}
+{%- endif %}
+    tags: {% if column.businessTerms | length > 0 %}{% for i in column.businessTerms %}
+      - tagFQN: ${{ i }}
+        source: Glossary
+        labelType: Manual
+        state: Confirmed
+    {% endfor %}{% else %}[]{% endif %}
+{% endfor %}{% else %}[]{% endif %}

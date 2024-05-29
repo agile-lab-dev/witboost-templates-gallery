@@ -1,0 +1,83 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ${{ values.identifier }}
+  description: ${{ values.description | dump }}
+  annotations:
+    gitlab.com/project-slug: ${{ values.owner + "/" + values.repo }}
+    backstage.io/techdocs-ref: dir:.
+  tags:
+    - outputport
+spec:
+  type: outputport
+  lifecycle: experimental
+  owner: ${{ values.developmentGroup }}
+  system: ${{ values.dataproduct | dump }}
+  domain: ${{ values.domain | dump }}
+  mesh:
+    name: ${{ values.name | dump }}
+    fullyQualifiedName: ${{ values.fullyQualifiedName | dump}}
+    description: ${{ values.description | dump}}
+    kind: outputport
+    version: ${{ values.identifier.split(".")[2] + ".0.0" }}
+    infrastructureTemplateId: ${{ values.infrastructureTemplateId }}
+    useCaseTemplateId: ${{ values.useCaseTemplateId }}
+    dependsOn: {% if values.dependsOn | length > 0 %}{% for i in values.dependsOn %}
+      - ${{ i }}{% endfor %}{% else %}[]{% endif %}
+    platform: <OP PLATFORM PLACEHOLDER>
+    technology: <OP TECHNOLOGY PLACEHOLDER>
+    outputPortType: <OP TYPE PLACEHOLDER>
+    creationDate: ${{ values.creationDate }}
+    startDate: ${{ values.creationDate }}
+    processDescription: ${{ values.processDescription | dump }}
+    dataContract:
+      schema: {% if values.schemaColumns | length > 0 %}
+      {%- for column in values.schemaColumns %}
+        {%- set primitiveType = column.arrayDataType if column.dataType == "ARRAY" else column.dataType %}
+        - name: ${{ column.name }}
+          dataType: ${{ column.dataType }}
+      {%- if column.description %}
+          description: ${{ column.description }}
+      {%- endif %}
+      {%- if column.constraint and column.constraint != "(no constraint)" %}
+          constraint: ${{ column.constraint }}
+      {%- endif %}
+      {%- if primitiveType in ["TEXT", "VARCHAR", "CHAR"] and column.dataLength %}
+          dataLength: ${{ column.dataLength }}
+      {%- endif %}
+      {%- if primitiveType == "DECIMAL" and column.precision %}
+          precision: ${{ column.precision }}
+      {%- endif %}
+      {%- if primitiveType == "DECIMAL" and column.precision %}
+          scale: ${{ column.scale }}
+      {%- endif %}
+      {%- if column.dataType == "ARRAY" and column.arrayDataType %}
+          arrayDataType: ${{ column.arrayDataType }}
+      {%- endif %}
+          tags: {% if column.businessTerms | length > 0 %}{% for i in column.businessTerms %}
+            - tagFQN: ${{ i }}
+              source: Glossary
+              labelType: Manual
+              state: Confirmed
+          {% endfor %}{% else %}[]{% endif %}
+      {% endfor %}{% else %}[]{% endif %}
+      termsAndConditions: ${{ values.termsAndConditions | dump }}
+      endpoint: ${{ values.endpoint | dump }}
+      SLA:
+        intervalOfChange: ${{ values.intervalOfChange }}
+        timeliness: ${{ values.timeliness }}
+        upTime: ${{ values.upTime }}
+    dataSharingAgreement:
+      purpose: ${{ values.purpose | dump }}
+      billing: ${{ values.billing | dump }}
+      security: ${{ values.security | dump }}
+      intendedUsage: ${{ values.intendedUsage | dump }}
+      limitations: ${{ values.limitations | dump }}
+      lifeCycle: ${{ values.lifeCycle | dump }}
+      confidentiality: ${{ values.confidentiality | dump }}
+    tags: []
+    sampleData: {}
+    semanticLinking: []
+    specific:
+      databaseName: ${{ values.databaseName }}
+      tableName: ${{ values.tableName }}

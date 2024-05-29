@@ -1,0 +1,67 @@
+{% set domainNameNormalized = values.domain | replace(r/domain:| |-/, "") %}
+{% set dataProductNameNormalized = values.dataproduct.split(".")[1] | replace(r/ |-/g, "") %}
+{% set dataProductMajorVersion = values.identifier.split(".")[2] %}
+
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  description: ${{ values.description | dump }}
+spec:
+  type: storage
+  lifecycle: experimental
+  owner: ${{ values.developmentGroup }}
+  mesh:
+    fullyQualifiedName: ${{ values.fullyQualifiedName | dump }}
+    description: ${{ values.description | dump }}
+    dependsOn: {% if values.dependsOn | length > 0 %}{% for i in values.dependsOn %}
+      - ${{ i }}{% endfor %}{% else %}[]{% endif %}
+    tags: {% if values.tags | length > 0 %}{% for i in values.tags %}
+      - tagFQN: ${{ i }}
+        source: Tag
+        labelType: Manual
+        state: Confirmed{% endfor %}{% else %}[]{% endif %}
+    specific:
+      database: {% if not values.database %}
+        {% set finalDatabaseName = domainNameNormalized %}
+        {% else %}
+        {% set finalDatabaseName = values.database | replace(r/ |-/, "") %}
+        {% endif %}
+        ${{ finalDatabaseName | upper }}
+      schema: {% if not values.schema %}
+        {% set finalSchemaName = dataProductNameNormalized + "_" + dataProductMajorVersion %}
+        {% else %}
+        {% set finalSchemaName = values.schema | replace(r/ |-/, "") %}
+        {% endif %}
+        ${{ finalSchemaName | upper }}
+      tables:
+      - tableName: ${{ values.tableName }}
+        schema: {% if values.schemaColumns | length > 0 %}
+        {%- for column in values.schemaColumns %}
+          {%- set primitiveType = column.arrayDataType if column.dataType == "ARRAY" else column.dataType %}
+          - name: ${{ column.name }}
+            dataType: ${{ column.dataType }}
+        {%- if column.description %}
+            description: ${{ column.description }}
+        {%- endif %}
+        {%- if column.constraint and column.constraint != "(no constraint)" %}
+            constraint: ${{ column.constraint }}
+        {%- endif %}
+        {%- if primitiveType in ["TEXT", "VARCHAR", "CHAR"] and column.dataLength %}
+            dataLength: ${{ column.dataLength }}
+        {%- endif %}
+        {%- if primitiveType == "DECIMAL" and column.precision %}
+            precision: ${{ column.precision }}
+        {%- endif %}
+        {%- if primitiveType == "DECIMAL" and column.precision %}
+            scale: ${{ column.scale }}
+        {%- endif %}
+        {%- if column.dataType == "ARRAY" and column.arrayDataType %}
+            arrayDataType: ${{ column.arrayDataType }}
+        {%- endif %}
+            tags: {% if column.businessTerms | length > 0 %}{% for i in column.businessTerms %}
+              - tagFQN: ${{ i }}
+                source: Glossary
+                labelType: Manual
+                state: Confirmed
+          {% endfor %}{% else %}[]{% endif %}
+        {% endfor %}{% else %}[]{% endif %}

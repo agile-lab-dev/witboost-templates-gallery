@@ -1,0 +1,57 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: retrieve-data-template.1
+  title: Retrieve data
+spec:
+  owner: agilelab
+  type: template
+  parameters:
+    - title: Retrieve data
+      properties:
+        catalogMapping:
+          title: Mapping catalog entities
+          type: object
+          properties:
+            sourceValue:
+              title: Source entity
+              type: string
+              description: "EntityPicker choosing a kind: system from catalog"
+              ui:field: EntityPicker
+              ui:options:
+                allowedKinds:
+                  - System
+            targetMapToValue:
+              title: Target value + object mapping
+              type: object
+              ui:field: EntitySelectionPicker
+              ui:fieldName: catalogMapping.sourceValue
+              ui:options:
+                allowArbitraryValues: false
+              mapTo:
+                systemName: spec.mesh.name
+              ui:displayLabel: systemName
+        catalogMultipleRetrieve:
+          title: Identities retrieval and mapping from catalog
+          type: object
+          properties:
+            identitiesSourceValue:
+              title: Source entity
+              type: array
+              description: "Choose some identities from the catalog"
+              ui:field: IdentitiesPicker
+              ui:options:
+                maxIdentities: 5
+                allowedKinds:
+                  - User
+                showOnlyUserMemberGroups: true
+            multipleTargetMapToValue:
+              title: Target value + array object mapping
+              type: array
+              ui:field: EntitySelectionPicker
+              ui:fieldName: catalogMultipleRetrieve.identitiesSourceValue
+              ui:options:
+                allowArbitraryValues: false
+              mapTo:
+                userEmail: spec.profile.email
+              ui:displayLabel: userEmail
