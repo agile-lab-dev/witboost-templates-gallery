@@ -8,6 +8,18 @@ spec:
   type: template
   parameters:
     - title: Form Layouts
+      description: |-
+        # Layouts
+
+        While building templates, it is usually beneficial to improve them not only technically, but also visually. To improve the user experience of a Witboost user that needs to create a component, we can arrange the fields in a template using different layouts. Witboost support grouping common fields, creating horizontal layouts, and tables.
+      
+        ![Witboost templates](https://witboost.com/hubfs/Witboost%20Core%20Capabilities%20-%20Q1%202024/Build/Final/BUILD%20-%20TEMPLATES%20v2.png)
+
+        **Contents**
+        - Object layout - Number fields
+        - Horizontal layout
+        - Table layout
+        
       properties:
         numberFields:
           title: Number fields

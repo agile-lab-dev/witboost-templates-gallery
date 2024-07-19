@@ -7,6 +7,7 @@ metadata:
   tags:
     - output-port
 spec:
+  generates: componenttype:default/outputport
   owner: agilelab
   type: outputport
   parameters:

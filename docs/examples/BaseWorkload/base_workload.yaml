@@ -7,6 +7,7 @@ metadata:
   tags:
     - workload
 spec:
+  generates: componenttype:default/workload
   owner: agilelab
   type: workload
   parameters:

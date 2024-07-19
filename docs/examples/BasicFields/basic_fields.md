@@ -282,7 +282,6 @@ You can create boolean fields which will store a `true` or `false` value. They c
 !!! info
     As of Witboost 1.5.1, we are aware that the boolean select with custom names is currently presenting inconsistent behaviour. An alternative in the meantime would be using the string field with a [closed list of values](#closed-list-of-values).
 
-
 ## Array fields
 
 All the template fields can be rendered as an ordered list by using the `array` type. By defining a field as an array, you can set the children schema as any kind of field shown in the Templates Gallery.
@@ -339,7 +338,9 @@ constrainedArray:
 
 ## Object fields
 
-You can group different fields into objects in order to group common information, to add subsections with their own titles and description, to make templates with a richer style and structure, or to enable the DescriptorPicker functionality to retrieve local form values. 
+You can group different fields into objects in order to group common information, to add subsections with their own titles and description, to make templates with a richer style and structure, or to enable the DescriptorPicker functionality to retrieve local form values.
+
+Object descriptions, as well as step descriptions, support Markdown syntax to enrich the form visuals. For more information, check the [Layouts](../Layouts/layouts.md#markdown-descriptions) examples.
 
 ```yaml
 numberFields:

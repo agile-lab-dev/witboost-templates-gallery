@@ -38,3 +38,68 @@ The disadvantages of this method are the following:
 2. **It lengthens the creation of a fully deployment-ready component:** Depending on the definition of the creation template and the limitation of choices from the user, the created component might not be deployment-ready at first but must be iterated continuously in order to have all of its fields filled. However, as stated on the best practices guidelines, this is seldom an issue, as we recommend the component creation template to be as straightforward as possible and rely on Edit Templates to complete the component technical details.
 
 We leverage this last approach on the [Output Port Streamlined Experience](examples/BaseOutputPort/StreamlinedExperience/base_streamlined_experience.md) example.
+
+## Dividing the template into files - YAML Substitution
+
+The template format supports substitutions using $text, $json, and $yaml.
+
+Placeholders like `$yaml: ./header.yaml` are substituted by the content of the referenced file. Files can be referenced from any configured integration similar to locations by passing an absolute URL. It's also possible to reference relative files like `./referenced.yaml` from the same location.
+
+This allows us to divide the template definition into different files where the template is complex and/or long. While we discourage the creation of long templates (see [Guidelines](guidelines.md)), sometimes the file itself becomes big and difficult to manage, so we can use YAML substitution to solve this by dividing the file into smaller ones.
+
+Furthermore, it allows whenever possible to reuse snippets of template without needing to rewrite them (e.g. [Table Schema layout](examples/TableSchemaLayout/table_schema_layout.md)).
+
+Let's see an example. Imagine we have the following structure:
+
+```
+.
+├── docs/
+├── skeleton/
+├── mkdocs.yaml
+├── template.yaml
+├── data_contract_schema.yaml
+└── README.md   
+```
+
+Where we have defined the table schema for a data contract on a separate file `data_contract_schema.yaml`, containing:
+
+`data_contract_schema.yaml`:
+```yaml
+schemaDefinition:
+ title: Define your table schema
+ type: object
+ properties:
+   schemaColumns:
+     title: Column Definitions
+     type: array
+     ui:ArrayFieldTemplate: ArrayTableTemplate
+     items:
+       type: object
+       ui:ObjectFieldTemplate: TableRowTemplate
+       required:
+         - name
+         - dataType
+       properties:
+         name:
+           type: string
+           title: Name
+         description:
+           type: string
+           title: Description
+...
+```
+
+To embed it as part of a step on our `template.yaml` we can do:
+
+`template.yaml`:
+```yaml
+spec: 
+  parameters:
+    - title: Data contract schema
+      required:
+         - schemaDefinition
+      properties:
+        $yaml: ./data_contract_schema.yaml
+```
+
+The processing of the file will be done when Registering the template on Witboost, which will store the exploded `template.yaml`. However, the files on the repository remain separated and the template on Witboost gets updated every time it is refreshed. 

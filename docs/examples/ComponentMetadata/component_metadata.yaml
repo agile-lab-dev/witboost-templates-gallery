@@ -6,6 +6,7 @@ metadata:
 spec:
   owner: agilelab
   type: <SET YOUR ENTITY TYPE>
+  generates: <PRACTICE SHAPER COMPONENTTYPE>
   parameters:
     - title: Component metadata
       description: Basic information for this component.

@@ -15,7 +15,7 @@ schema: {% if values.schemaColumns | length > 0 %}
 {%- if primitiveType == "DECIMAL" and column.precision %}
     precision: ${{ column.precision }}
 {%- endif %}
-{%- if primitiveType == "DECIMAL" and column.precision %}
+{%- if primitiveType == "DECIMAL" and column.scale %}
     scale: ${{ column.scale }}
 {%- endif %}
 {%- if column.dataType == "ARRAY" and column.arrayDataType %}
