@@ -1,3 +1,6 @@
+---
+sidebar_position: 7
+---
 # Transforming entities
 
 When creating templates, you might end up storing more than simple primitive values (strings, numbers, etc.) on the template fields. Objects and arrays of objects can be specially useful if you're creating complex structures like table schemas or handling catalog entities like other components, users and groups, etc. In many occasions the object in their original form is not what you need, but it rather needs to be mapped to a new schema.
@@ -34,9 +37,9 @@ targetMapToValue:
   ui:displayLabel: systemName
 ```
 
-The example above transform the source, which in this case is the System entity ID (most pickers store the entity ID [rather than the whole object](../DynamicSelect/dynamic_select.md#using-the-retrieved-entity)), into an object containing two fields `systemName` and `systemOwner` which will now be accessible from the `targetMapToValue` object.
+The example above transform the source, which in this case is the System entity ID (most pickers store the entity ID [rather than the whole object](../DynamicSelect/dynamicSelect.md#using-the-retrieved-entity)), into an object containing two fields `systemName` and `systemOwner` which will now be accessible from the `targetMapToValue` object.
 
-We can extend this behaviour to the array case, where each item of the source array gets mapped into a new object. Let's suppose you've used an **IdentitiesPicker** to load a set of users and/or groups to the template. However, you need to transform the catalog entity to a new object type that suits your needs to send an access control request. [Retrieve Data](../RetrieveData/retrieve_data.md#catalog-source) explains how to hook an **EntitySelectionPicker** to the IdentitiesPicker in order to create an array of strings based on *one* property of the User entity. Now we can extend this behaviour further to create a new object by defining the fields to preserve.
+We can extend this behaviour to the array case, where each item of the source array gets mapped into a new object. Let's suppose you've used an **IdentitiesPicker** to load a set of users and/or groups to the template. However, you need to transform the catalog entity to a new object type that suits your needs to send an access control request. [Retrieve Data](../RetrieveData/retrieveData.md#catalog-source) explains how to hook an **EntitySelectionPicker** to the IdentitiesPicker in order to create an array of strings based on *one* property of the User entity. Now we can extend this behaviour further to create a new object by defining the fields to preserve.
 
 ```yaml
 identitiesSourceValue:
@@ -63,4 +66,4 @@ The example above converts the list of catalog entities, to a list of objects ea
 
 ## CustomUrlPicker
 
-As explained on [Dynamic Select](../DynamicSelect/dynamic_select.md#external-source-api), the **CustomUrlPicker** can also perform transformation of the retrieved objects. See that section for more information on how it can be done. 
+As explained on [Dynamic Select](../DynamicSelect/dynamicSelect.md#external-source-api), the **CustomUrlPicker** can also perform transformation of the retrieved objects. See that section for more information on how it can be done. 

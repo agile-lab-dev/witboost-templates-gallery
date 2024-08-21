@@ -1,6 +1,12 @@
-The Templates Gallery aims to provide a comprehensive guide to building templates for Witboost. Templates are a core part of the user experience when using Witboost, as such for the Platform Team it is crucial to develop easy-to-use, intuitive, reusable templates.
+---
+sidebar_position: 0
+---
 
-This Gallery includes guidelines on how to design the wizard and other parts of a template, best practices to follow when working on them, and examples of reusable snippets that can be incorporated in your templates.
+# Templates Overview
+
+This documentation provides a comprehensive guide to building templates for Witboost. Templates are a core part of the user experience when using Witboost, and as such for the Platform Team it is crucial to develop easy-to-use, intuitive, reusable templates.
+
+This section includes reference documentation on Witboost templates and its customization, guidelines on how to design the wizard and other parts of a template, best practices to follow when working on them, and examples of reusable snippets that can be incorporated in templates.
 
 ### What's a Template?
 
@@ -40,4 +46,4 @@ skeleton/
 
 If you're looking to develop your first template using the information in this repository, we suggest starting from the [guidelines](guidelines.md).
 
-For more information on templates, also check out the [official documentation](https://docs.witboost.agilelab.it/docs/p1_user/p6_advanced/p6_1_templates/#getting-started).
+For more information on templates, also check out the [user documentation](https://docs.witboost.com/docs/p1_user/p6_advanced/p6_1_templates/#getting-started).

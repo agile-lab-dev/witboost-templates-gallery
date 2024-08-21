@@ -1,6 +1,11 @@
-# Example snippets
+---
+sidebar_position: 0
+sidebar_label: Overview
+---
 
-The Templates Gallery provides a set of examples of component templates, access request templates and template sections grouped by functionality that you can take and customize for your own templates. 
+# Examples Overview
+
+This section provides a set of examples of component templates, and template sections grouped by functionality that you can take and customize for your own templates. You can see these examples on our Templates Gallery [repository](https://github.com/agile-lab-dev/witboost-templates-gallery) which is part of the [Witboost Starter Kit](https://github.com/agile-lab-dev/witboost-starter-kit).
 
 - [Overview](#overview)
 - [Usage](#usage)
@@ -8,22 +13,22 @@ The Templates Gallery provides a set of examples of component templates, access 
 
 ## Overview
 
-We provide several different sections of examples, going from the explanation of the templates' [Basic Fields](BasicFields/basic_fields.md), to a scaffold for [Data Product](BaseDataProduct/base_data_product.md), [Storage](BaseStorage/base_storage.md), [Workload](BaseWorkload/base_workload.md) and [Output Port](BaseOutputPort/StreamlinedExperience/base_streamlined_experience.md) templates that you can further expand based on your environment and technology requirements.
+We provide several different sections of examples, going from the explanation of the templates' [Basic Fields](BasicFields/basicFields.md), to a scaffold for [Data Product](BaseDataProduct/baseDataProduct.md), [Storage](BaseComponents/BaseStorage/baseStorage.md), [Workload](BaseComponents/BaseWorkload/baseWorkload.md) and [Output Port](BaseComponents/BaseOutputPort/StreamlinedExperience/streamlinedExperience.md) templates that you can further expand based on your environment and technology requirements.
 
 This Templates Gallery examples are meant to be a more hands-on and code-ready experience than the Witboost documentation on the customization of templates, but the latter still acts as a valuable comprehensive resource on how to configure each type of field. 
 
-- [**Basic Fields**](BasicFields/basic_fields.md): Learn about the different kinds of primitive (string, numbers, dates, etc.) fields you can create and how to configure them to allow for input validation, styling, and more.
+- [**Basic Fields**](BasicFields/basicFields.md): Learn about the different kinds of primitive (string, numbers, dates, etc.) fields you can create and how to configure them to allow for input validation, styling, and more.
 - [**Layouts**](Layouts/layouts.md): Learn how to organize your template to offer a better user experience. Set up tables, row layouts, etc. to take your forms to the next level.
-- [**Conditional Fields**](ConditionalFields/conditional_fields.md): Learn how to configure your template to offer different sets of fields depending on the choices and inputs from the user, allowing for more rich and complex templates.
-- [**Table Schema Layout**](TableSchemaLayout/table_schema_layout.md): Data often revolves around tables, and defining its schema is vital for ensuring operability and quality. Learn how to define a table layout compliant with the OpenMetadata table schema that you can use when defining tables.
-- [**Retrieve Data**](RetrieveData/retrieve_data.md): Learn how to set up fields to retrieve data from other sources and inject them into your form. This section explains how to retrieve information from the form itself or from the Witboost catalog entities.
-- [**Dynamic Select**](DynamicSelect/dynamic_select.md): Tightly related to Retrieve Data, learn how to retrieve information from other sources to configure the choices offered to the user, either from the form itself, from the Witboost catalog or from external sources; improving the component creation experience and guaranteeing interoperability of Witboost entities. This section explains how to query the Witboost catalog to retrieve different kinds of entities you will need when creating a new one.
-- [**Transforming Entities**](TransformingEntities/transforming_entities.md): Learn how to transform the shape of the data created or retrieved on your form, to suit the requirements of the entity or action your template will create. 
-- [**Component Metadata**](ComponentMetadata/component_metadata.md): Learn how to define the common section of any component template, where we define the necessary metadata fields to identify an entity on Witboost.
-- [**Base Data Product**](BaseDataProduct/base_data_product.md): We offer a base example for a Data Product, the system entity on a Data Mesh environment.
-- [**Base Storage**](BaseStorage/base_storage.md): We offer a base example for a Storage component, responsible for creating the internal systems the data product needs to handle its data on a Data Mesh environment.
-- [**Base Workload**](BaseWorkload/base_workload.md): We offer a base example for a Workload component, responsible for the processes to extract, load and/or transform the data used by the data product on a Data Mesh environment.
-- [**Base Output Port**](BaseOutputPort/StreamlinedExperience/base_streamlined_experience.md): We offer a base example for an Output Port component, responsible for exposing the data of the data product on a Data Mesh environment, along with its metadata, data contracts and more.
+- [**Conditional Fields**](ConditionalFields/conditionalFields.md): Learn how to configure your template to offer different sets of fields depending on the choices and inputs from the user, allowing for more rich and complex templates.
+- [**Table Schema Layout**](TableSchemaLayout/tableSchemaLayout.md): Data often revolves around tables, and defining its schema is vital for ensuring operability and quality. Learn how to define a table layout compliant with the OpenMetadata table schema that you can use when defining tables.
+- [**Retrieve Data**](RetrieveData/retrieveData.md): Learn how to set up fields to retrieve data from other sources and inject them into your form. This section explains how to retrieve information from the form itself or from the Witboost catalog entities.
+- [**Dynamic Select**](DynamicSelect/dynamicSelect.md): Tightly related to Retrieve Data, learn how to retrieve information from other sources to configure the choices offered to the user, either from the form itself, from the Witboost catalog or from external sources; improving the component creation experience and guaranteeing interoperability of Witboost entities. This section explains how to query the Witboost catalog to retrieve different kinds of entities you will need when creating a new one.
+- [**Transforming Entities**](TransformingEntities/transformingEntities.md): Learn how to transform the shape of the data created or retrieved on your form, to suit the requirements of the entity or action your template will create. 
+- [**Component Metadata**](BaseComponents/ComponentMetadata/componentMetadata.md): Learn how to define the common section of any component template, where we define the necessary metadata fields to identify an entity on Witboost.
+- [**Base Data Product**](BaseDataProduct/baseDataProduct.md): We offer a base example for a Data Product, the system entity on a Data Mesh environment.
+- [**Base Storage**](BaseComponents/BaseStorage/baseStorage.md): We offer a base example for a Storage component, responsible for creating the internal systems the data product needs to handle its data on a Data Mesh environment.
+- [**Base Workload**](BaseComponents/BaseWorkload/baseWorkload.md): We offer a base example for a Workload component, responsible for the processes to extract, load and/or transform the data used by the data product on a Data Mesh environment.
+- [**Base Output Port**](BaseComponents/BaseOutputPort/StreamlinedExperience/streamlinedExperience.md): We offer a base example for an Output Port component, responsible for exposing the data of the data product on a Data Mesh environment, along with its metadata, data contracts and more.
 
 ## Usage
 

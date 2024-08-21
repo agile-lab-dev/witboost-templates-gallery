@@ -1,12 +1,15 @@
+---
+sidebar_position: 6
+---
 # Dynamic Data Selection
 
-On many cases when building templates, some fields require limiting the options provided to the user based on information from existing sources, like from other entities in Witboost or from the same form. Opposite to what [retrieving single pieces of information](../RetrieveData/retrieve_data.md) refer to, we dynamically query information to offer the user a sensible choice based on the context of the new entity being created.
+On many cases when building templates, some fields require limiting the options provided to the user based on information from existing sources, like from other entities in Witboost or from the same form. Opposite to what [retrieving single pieces of information](../RetrieveData/retrieveData.md) refer to, we dynamically query information to offer the user a sensible choice based on the context of the new entity being created.
 
 This guide explains how to retrieve sets of values that can be shown to the user to limit the input provided by them, including querying the Witboost catalog, external sources, or picking information from the form itself.
 
 Dynamically retrieving data to display as input is very useful as it allows our forms to do things like:
 
-- Retrieve entities and its metadata to link the new one to them (e.g. data products to domain, components to a data product, users to data products as owners, etc. See for example [Component Metadata](../ComponentMetadata/component_metadata.md)).
+- Retrieve entities and its metadata to link the new one to them (e.g. data products to domain, components to a data product, users to data products as owners, etc. See for example [Component Metadata](../BaseComponents/ComponentMetadata/componentMetadata.md)).
 - Defining dependencies among components of the same system (e.g. inside the same data product).
 - Defining lineage relationships between components of different systems (e.g. a workload that reads from the output port of another data product).
 - Table partition definition based on inputted table schema.
@@ -47,10 +50,13 @@ localRetrieve:
 
 As seen on the example, the key aspect is wrapping the desired field in an object to set it as `source` on the DescriptorPicker and setting the desired field on the `optionsAt` field. As the source is a simple string list, with only this configuration, the retrieval will work as expected.
 
-!!! info
-    Whenever you use a **DescriptorPicker**, the output of this field will be an object with three fields: `label`, which stores the display name of the chosen option, `key` which stores the index of the selected object in the list, and `value`, which stores the actual value we're interested in. 
+:::info
+
+Whenever you use a **DescriptorPicker**, the output of this field will be an object with three fields: `label`, which stores the display name of the chosen option, `key` which stores the index of the selected object in the list, and `value`, which stores the actual value we're interested in. 
     
-    Whenever you build your templates and skeleton, be aware of this fact when referencing the output of any DescriptorPicker field. For more information, check the Witboost documentation.
+Whenever you build your templates and skeleton, be aware of this fact when referencing the output of any DescriptorPicker field. For more information, check the Witboost documentation.
+
+:::
 
 If the source array has a more complex schema, like an object, it is possible to use the `optionsDisplayNameAt` property to pick a field as a display name.
 
@@ -105,8 +111,11 @@ As an example, this can be useful for choosing the partition columns on a table 
 
 The Witboost catalog contains all the entities that make Witboost work, and in many cases it's necessary to retrieve them when working with templates, especially when creating new components that are part of a parent one (e.g. components to data products), or retrieving identities to assign roles or responsibilities to a certain user or group. For these purposes, Witboost offers a comprehensive list of pickers tailored for these use cases, so let's see some usage examples.
 
-!!! warning
-    This sourcing mechanism is simply used to automatically retrieve data from other entities and save it in the new one. It **does not** link them such that if the upstream schema changes the new one will change as well. If the upstream entity changes, you would need to edit the new component using the Editor Wizard to update it.
+:::warning
+
+This sourcing mechanism is simply used to automatically retrieve data from other entities and save it in the new one. It **does not** link them such that if the upstream schema changes the new one will change as well. If the upstream entity changes, you would need to edit the new component using the Editor Wizard to update it.
+
+:::
 
 ### Entity types
 
@@ -142,10 +151,13 @@ dataproduct:
 
 If, for example, we have a Finance domain with a list of data products, we can initially pick "Finance" from the first option and then the second field will update its options list accordingly, showing only the data products of the Finance domain. Please notice that if nothing is selected on the `domain` field, the related filter will be ignored and all data products will be shown.
 
-!!! info
-    Currently, for the **EntityPicker** to work, the fields that the applied filters are referencing must be at root level of the form, not nested on other objects, but they can be located on any section of the form.
+:::info
 
-Currently, it is not possible to use literals as filter values, but you can create a [hidden string field](../BasicFields/basic_fields.md#hidden-field) with a default equal to the filter value you need and reference such field on the EntityPicker filter.
+Currently, for the **EntityPicker** to work, the fields that the applied filters are referencing must be at root level of the form, not nested on other objects, but they can be located on any section of the form.
+
+:::
+
+Currently, it is not possible to use literals as filter values, but you can create a [hidden string field](../BasicFields/basicFields.md#hidden-field) with a default equal to the filter value you need and reference such field on the EntityPicker filter.
 
 ```yaml
 hiddenDomain:
@@ -169,7 +181,7 @@ For more information about the configuration of the EntityPicker, see the Witboo
 
 ##### Identities and principals
 
-A special case that the EntityPicker provides when querying for users and groups allows to provide an extra filter that restricts the options to users or groups that the current user belongs to. This is enabled by setting the property  `ui:options.showOnlyUserOwnGroups` to `true`. By enabling this: 
+A special case that the EntityPicker provides when querying for users and groups allows to provide an extra filter that restricts the options to users or groups that the current user belongs to. This is enabled by setting the property `ui:options.showOnlyUserOwnGroups` to `true`. By enabling this: 
   
 - If `allowedKinds` contains User, then it will only show users that belong to the same groups of the current user
 - If `allowedKinds` contains Group, then it will only show the groups to which the current user belongs.
@@ -238,8 +250,11 @@ dataProductStorages:
 
 ![catalog_erpicker_storage.png](img/catalog_erpicker_storage.png)
 
-!!! info
-    Notice that these filters are different from the EntityPicker `ui:filter`, as these accept literal values rather than a reference to other form fields. This is done on purpose for backward compatibility purposes with the now retired EntityComponentsPicker.
+:::info
+
+Notice that these filters are different from the EntityPicker `ui:filter`, as these accept literal values rather than a reference to other form fields. This is done on purpose for backward compatibility purposes with the now retired EntityComponentsPicker.
+
+:::
 
 Using the EntityRelationsPicker, it is also possible to grab as source not only an entity referenced on a form field, but a reference to another entity which is stored as a value inside that initial entity using the `ui:property` keyword similarly to the EntitySelectionPicker. This is useful for referencing relations of entities whose IDs are stored inside other entities.
 
@@ -269,8 +284,11 @@ user:
 
 Here, we add the `ui:property` to define the field inside the Domain entity where the owner group ID is located (`spec.owner`), and then, by specifying the `hasMember` relation, we retrieve all users belonging to said group, so the template user can now choose from this limited set of people. 
 
-!!! info
-    Currently, for the **EntityRelationsPicker** to work, the field used as a source and set on the `ui:fieldName` must be at root level of the form, not nested on other objects, but they can be located on any section of the form.
+:::info
+
+Currently, for the **EntityRelationsPicker** to work, the field used as a source and set on the `ui:fieldName` must be at root level of the form, not nested on other objects, but they can be located on any section of the form.
+
+:::
 
 For other complex queries on users and groups, see the [Identities and principals relations](#identities-and-principals-relations) strategy.
 
@@ -280,7 +298,7 @@ For more information about the configuration of the EntityRelationsPicker, see t
 
 Data lineage allows us to see how data flows inside a platform. We can define this "reads from" relationships by using the **ReadsFromPicker** which provides a field from which the user can choose a reads-from source, querying the catalog for available Output ports on a set domain and data product, or by choosing from the set of registered external Resources.
 
-For example, on the Data Mesh taxonomy, workloads are set with a field specifying the list of sources said workloads reads from. These sources can be either output ports from other data products, or external sources. In order to select said source, the **ReadsFromPicker** is used. See [Base Workload](../BaseWorkload/base_workload.md) for an example.
+For example, on the Data Mesh taxonomy, workloads are set with a field specifying the list of sources said workloads reads from. These sources can be either output ports from other data products, or external sources. In order to select said source, the **ReadsFromPicker** is used. See [Base Workload](../BaseComponents/BaseWorkload/baseWorkload.md) for an example.
 
 ```yaml
 readsFromComponent:
@@ -328,7 +346,7 @@ Another important picker regarding Access Request templates is the **AccessContr
 
 ### Using the retrieved entity
 
-When using any of the strategies mentioned above to retrieve the desired entities, the field is actually saving the id of the retrieved entity, not the whole object as its value. For example, a certain domain and a data product field will save the strings `domain:finance` and `system:finance.cashflow.1` respectively as values. If you need to actually retrieve specific values stored on the entities, there are two strategies: Either you can use the **EntitySelectionPicker** to perform this information refining to retrieve single pieces of information (See [Retrieve Data](../RetrieveData/retrieve_data.md#catalog-source) and [Transforming Entities](../TransformingEntities/transforming_entities.md) for more information), or you can use the **DescriptorPicker** to retrieve a set of values to act as options from said entity descriptor.
+When using any of the strategies mentioned above to retrieve the desired entities, the field is actually saving the id of the retrieved entity, not the whole object as its value. For example, a certain domain and a data product field will save the strings `domain:finance` and `system:finance.cashflow.1` respectively as values. If you need to actually retrieve specific values stored on the entities, there are two strategies: Either you can use the **EntitySelectionPicker** to perform this information refining to retrieve single pieces of information (See [Retrieve Data](../RetrieveData/retrieveData.md#catalog-source) and [Transforming Entities](../TransformingEntities/transformingEntities.md) for more information), or you can use the **DescriptorPicker** to retrieve a set of values to act as options from said entity descriptor.
 
 The second strategy is limited only to the **EntityPicker** and revolves around the `ui:options.storeRawEntity` property, which allows to inject into the current context the raw object of the entity, enabling the DescriptorPicker to query said object. By setting this property to `true` we can retrieve information similarly to how we query [local form sources](#local-form-source) using this same picker. This is explained in great detail on Witboost documentation so let's see some more complete examples:
 
@@ -430,14 +448,20 @@ This example show more or less all the possible customizations of the CustomUrlP
 
 - The retrieval endpoint is configured to be `POST http://url.com/some/path/retrieve` sending a body with two parameters, `areaType` which is a fixed string, and `domain` which equals to the field domain defined elsewhere in the form
 
-    !!! info
-        You can also configure these values as part of the Witboost configuration, rather than defining them on each template, providing extra features like auth API keys
+    :::info
+    
+    You can also configure these values as part of the Witboost configuration, rather than defining them on each template, providing extra features like auth API keys
+    
+    :::
 
 - The validation endpoint is configured as `POST http://url.com/some/path/validation` which will be used to validate at later points in the component lifecycle the stored values
 
-    !!! info
-        You can also configure these values as part of the Witboost configuration, rather than defining them on each template, providing extra features like auth API keys
-
+    :::info
+    
+    You can also configure these values as part of the Witboost configuration, rather than defining them on each template, providing extra features like auth API keys
+    
+    :::
+    
 - The values to show both in the options (`ui:displayFields`) and in the selected values (`ui:options.selectedField`)
 - The values to store as the item body (`ui:fieldsToSave`)
 - If the type of the field is an array, you can limit the number of items the user can choose

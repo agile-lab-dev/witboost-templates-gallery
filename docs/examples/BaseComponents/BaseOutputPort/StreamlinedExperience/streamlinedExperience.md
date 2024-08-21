@@ -2,11 +2,11 @@
 
 Output ports are one of the main components for the Data Mesh data platform taxonomy. They are used to expose data to users using a well annotated and structured port, as well as handling access control.
 
-For this reason, is important to streamline the experience of the creation of these output ports to users. This example follows a basic template for an output port creation that includes just the minimal set of values required for the creation of an Output Port, following the guidelines provided on the [Template creation guidelines](../../../guidelines.md). Following this, we don't expect it to be ready to release and deploy right after creating it, but simply allowing a starting point for the data product developers to keep iterating on it until it's ready for deployment. Because of this, it relies heavily on taking advantage of the [Editor Wizard](../../../guidelines.md#edit-wizard).
+For this reason, is important to streamline the experience of the creation of these output ports to users. This example follows a basic template for an output port creation that includes just the minimal set of values required for the creation of an Output Port, following the guidelines provided on the [Template creation guidelines](../../../../guidelines.md). Following this, we don't expect it to be ready to release and deploy right after creating it, but simply allowing a starting point for the data product developers to keep iterating on it until it's ready for deployment. Because of this, it relies heavily on taking advantage of the [Editor Wizard](../../../../guidelines.md#edit-wizard).
 
-For a more complete example on how an Output Port template might look like (for example, to create the edit templates used on the Editor Wizard), you might take a look at the [Full Experience Output Port](../FullExperience/base_full_experience.md) example.
+For a more complete example on how an Output Port template might look like (for example, to create the edit templates used on the Editor Wizard), you might take a look at the [Full Experience Output Port](../FullExperience/fullExperience.md) example.
 
-All examples shown here are taken from the accompanying [`base_streamlined_experience.yaml`](base_streamlined_experience.yaml) template file, which you can see live by following the steps explained [here](../../README.md#usage).
+All examples shown here are taken from the accompanying [`base_streamlined_experience.yaml`](base_streamlined_experience.yaml) template file, which you can see live by following the steps explained [here](../../../README.md#usage).
 
 ## Usage
 
@@ -29,9 +29,9 @@ Usually, the schema for the information to be exposed is not completely known at
 
 Following this reasoning, we consider the best practice to propose the user the choice between initially leaving the schema empty or to have an inheritance mechanism to retrieve the schema from another component already present in the Data Product.
 
-If you consider that this mechanism might not be necessary for the Output Port template you're developing, you can eliminate this step completely and default the `dataContract.schema` on your `catalog-info.yaml` to an empty array `[]`, providing the possibility to edit it on the Editor Wizard with a schema like the one proposed on the [Table Schema Layout](../../TableSchemaLayout/table_schema_layout.md) example.
+If you consider that this mechanism might not be necessary for the Output Port template you're developing, you can eliminate this step completely and default the `dataContract.schema` on your `catalog-info.yaml` to an empty array `[]`, providing the possibility to edit it on the Editor Wizard with a schema like the one proposed on the [Table Schema Layout](../../../TableSchemaLayout/tableSchemaLayout.md) example.
 
-To achieve this inheritance feature, we can leverage the [Conditional Fields](../../ConditionalFields/conditional_fields.md) feature and the [Retrieve Data](../../RetrieveData/retrieve_data.md) feature, where the combination between an EntityRelationsPicker and an EntitySelectionPicker gives the possibility to pick the schema of an existing component.
+To achieve this inheritance feature, we can leverage the [Conditional Fields](../../../ConditionalFields/conditionalFields.md) feature and the [Retrieve Data](../../../RetrieveData/retrieveData.md) feature, where the combination between an EntityRelationsPicker and an EntitySelectionPicker gives the possibility to pick the schema of an existing component.
 
 ```yaml
 properties:
@@ -87,13 +87,15 @@ The key aspect that unlocks this feature is to have a consistent schema specific
 
 To make the previous snippet work in your context, the main aspect to modify is the `ui:property` value on the `schemaDefinition.schemaColumns` property to make it point to the appropriate path on the target type of component where the schema is located. In the given example we assume that the table schema is located in the `specific` section of the component. If setup successfully, you can now use this inherited schema on the `catalog-info.yaml`, traversing it as a normal object.
 
-If you have a list of schemas to pick from instead of just one, you can improve this section by using a DescriptorPicker instead of an EntitySelectionPicker, in order to allow the user to select the schema to be inherited. Check [Dynamic Select](../../DynamicSelect/dynamic_select.md) for an example on how to do it.
+If you have a list of schemas to pick from instead of just one, you can improve this section by using a DescriptorPicker instead of an EntitySelectionPicker, in order to allow the user to select the schema to be inherited. Check [Dynamic Select](../../../DynamicSelect/dynamicSelect.md) for an example on how to do it.
 
 Lastly, when developing the `edit-template.yaml` in order to allow the user to modify this inherited schema, you just need to define the same `schemaDefinition.schemaColumns` property but with the Table Schema Layout instead. The template will retrieve the stored schema and will show it to the user in the table shape. The structure of the object holding these fields must be equal to the structure of the schema retrieved at inheritance time to render correctly all the values. You can see a working example in the [edit template](base_streamlined_experience_edit-template.yaml) of this example.
 
-!!! warning
-    This inheritance mechanism is simply used to automatically retrieve the schema from another component and save it in the new one. It **does not** link these two components such that if the upstream schema changes the new one will change as well. If the upstream schema changes, you would need to manually edit the new component using the Editor Wizard to update it.
+:::warning
 
+This inheritance mechanism is simply used to automatically retrieve the schema from another component and save it in the new one. It **does not** link these two components such that if the upstream schema changes the new one will change as well. If the upstream schema changes, you would need to manually edit the new component using the Editor Wizard to update it.
+
+:::
 
 ### Provide Output port deployment information
 
@@ -103,7 +105,7 @@ Customize this section and further sections based on the requirements for the sp
 
 ### Repository location
 
-Following the [best practice guidelines](../../../guidelines.md), the streamlined creation of the template removes one of the most confusing sections of a template, which asks the user the location to store this component on the Git repository. As Witboost creates the missing subgroups on the chosen location, we can directly provide a location based on the domain/data product/component structure and write it "hardcoded" on the template specification like this:
+Following the [best practice guidelines](../../../../guidelines.md), the streamlined creation of the template removes one of the most confusing sections of a template, which asks the user the location to store this component on the Git repository. As Witboost creates the missing subgroups on the chosen location, we can directly provide a location based on the domain/data product/component structure and write it "hardcoded" on the template specification like this:
 
 ```yaml
   steps:

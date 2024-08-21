@@ -1,3 +1,6 @@
+---
+sidebar_position: 3.5
+---
 # Guidelines
 
 The purpose of this document is to provide guidance on how to create a template that is useful, comprehensive, and easy-to-use. Good developer experience is key for productivity and adoption, so even though working on templates may not be as fun as writing code, it is crucial to put effort in them, as otherwise users may find themselves stranded or frustrated. When creating a template you should have the user's experience as a top priority.
@@ -35,7 +38,7 @@ The following are some practical suggestions you should always follow when devel
 - Provide meaningful descriptions for fields: tell the user what they are supposed to provide. Keep in mind the user may be unfamiliar with a technology or even the entire platform, so the field name is not always enough.
 - Field validation: use regex pickers or other validation systems to stop the user from providing invalid values, don't let them run wild only to punish them with a policy down the line.
 - Use sections: split the wizard into coherent parts. Provide brief introductions to sections; use Markdown syntax to help.
-- Avoid using the RepoUrlPicker in favour of predefined paths (see [Repository Location example](examples/BaseOutputPort/StreamlinedExperience/base_streamlined_experience.md#repository-location)).
+- Avoid using the RepoUrlPicker in favour of predefined paths (see [Repository Location example](examples/BaseComponents/BaseOutputPort/StreamlinedExperience/streamlinedExperience.md#repository-location)).
 
 ## Edit wizard
 
@@ -53,8 +56,11 @@ The following is a minimal list of fields that cannot be changed since they are 
 - Identifier
 - Development Group
 
-!!! warning
+:::warning
+
 You may have to lock additional fields, depending on the component that has been created and how flexible the platform is. Keep in mind the edit wizard can be used at any moment, even after the component has already been deployed.
+
+:::
 
 ## Skeleton
 

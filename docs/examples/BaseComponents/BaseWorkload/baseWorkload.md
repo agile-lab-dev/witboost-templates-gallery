@@ -1,3 +1,6 @@
+---
+sidebar_position: 11
+---
 # Base Workload
 
 Workloads are one of the main components of the Data Mesh data platform taxonomy. They allow the definition and scheduling of all ETL processes, DAG workflows, etc. needed for the Data Product to work.
@@ -24,7 +27,7 @@ You can use this folder as the base for a template repository and start developi
 
 ### Component metadata
 
-You might already be familiar with this section, as it is relatively stable across different kinds of components. To learn more about these fields, check the [Component Metadata](../ComponentMetadata/component_metadata.md) example.
+You might already be familiar with this section, as it is relatively stable across different kinds of components. To learn more about these fields, check the [Component Metadata](../ComponentMetadata/componentMetadata.md) example.
 
 ### Workload job and scheduling details
 
@@ -34,4 +37,4 @@ Customize this section and further sections based on the requirements for the sp
 
 ### Repository location
 
-See the [Output Port Streamlined Experience](../BaseOutputPort/StreamlinedExperience/base_streamlined_experience.md#repository-location) for more information on how we calculate repository URLs to avoid asking the user this information.
+See the [Output Port Streamlined Experience](../BaseOutputPort/StreamlinedExperience/streamlinedExperience.md#repository-location) for more information on how we calculate repository URLs to avoid asking the user this information.

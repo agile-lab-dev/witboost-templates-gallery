@@ -1,8 +1,12 @@
+---
+sidebar_position: 7.5
+---
+
 # Templating solutions
 
 ## Same field, different visual renders
 
-When creating a template, we might require that a field is shown with a different layout depending on the input of the user (for example, a [conditional field](examples/ConditionalFields/conditional_fields.md) that allows the user to either pick a value from an external source, or typing it manually). The problem lies in the limitation Witboost templates have where one field (identified by its key) can only have one "winning" definition, so if the same field is defined in two different places, one will override the properties and visual rendering of the others. As we will see, there are several solutions to this problem, each one with their own advantages and disadvantages.
+When creating a template, we might require that a field is shown with a different layout depending on the input of the user (for example, a [conditional field](examples/ConditionalFields/conditionalFields.md) that allows the user to either pick a value from an external source, or typing it manually). The problem lies in the limitation Witboost templates have where one field (identified by its key) can only have one "winning" definition, so if the same field is defined in two different places, one will override the properties and visual rendering of the others. As we will see, there are several solutions to this problem, each one with their own advantages and disadvantages.
 
 - **Two fields that coalesce into one on templating step**
 
@@ -16,7 +20,7 @@ The first solution we propose is the most straight-forward but that comes with a
 
     ![template_parameters](img/template_parameters.png)
 
-    Assume we have a field to define the table schema of a component. We want to give the option to the user to inherit it from an existing component (`inheritSC`) or to write it manually (`schemaColumns`), and then when creating the catalog-info file we set the correct condition for it to be saved correctly based on the choice of the user (see the [Output Port Streamlined Experience](examples/BaseOutputPort/StreamlinedExperience/base_streamlined_experience.md) example). The form context will be saved along with the catalog-info in order to allow the component to be editable. Different to the catalog-info, this form context will store both values with the appropriate key, each referring to one of the fields. 
+    Assume we have a field to define the table schema of a component. We want to give the option to the user to inherit it from an existing component (`inheritSC`) or to write it manually (`schemaColumns`), and then when creating the catalog-info file we set the correct condition for it to be saved correctly based on the choice of the user (see the [Output Port Streamlined Experience](examples/BaseComponents/BaseOutputPort/StreamlinedExperience/streamlinedExperience.md) example). The form context will be saved along with the catalog-info in order to allow the component to be editable. Different to the catalog-info, this form context will store both values with the appropriate key, each referring to one of the fields. 
 
     If we define a basic Edit Template which mirrors the creation Template, we run into the error seen on the diagram. Each of the fields will load from the stored form context the values, which in practice means that each field will show what the user inputted on the form, not what the value is on the catalog-info. Thus, if the user chose to fill the `inheritSC` at creation time, but then want to manually edit said schema, it won't be able to do so, as `inheritSC` is defined as a picker to inherit said schema. The same problem verifies if the user inputted the schema manually.
 
@@ -37,7 +41,7 @@ The disadvantages of this method are the following:
 1. **Only one choice at each step:** This solution doesn't allow the creation of a template that gives the choice to the user to insert the values in two different ways, so it might not be suitable in some use cases.
 2. **It lengthens the creation of a fully deployment-ready component:** Depending on the definition of the creation template and the limitation of choices from the user, the created component might not be deployment-ready at first but must be iterated continuously in order to have all of its fields filled. However, as stated on the best practices guidelines, this is seldom an issue, as we recommend the component creation template to be as straightforward as possible and rely on Edit Templates to complete the component technical details.
 
-We leverage this last approach on the [Output Port Streamlined Experience](examples/BaseOutputPort/StreamlinedExperience/base_streamlined_experience.md) example.
+We leverage this last approach on the [Output Port Streamlined Experience](examples/BaseComponents/BaseOutputPort/StreamlinedExperience/streamlinedExperience.md) example.
 
 ## Dividing the template into files - YAML Substitution
 
@@ -47,7 +51,7 @@ Placeholders like `$yaml: ./header.yaml` are substituted by the content of the r
 
 This allows us to divide the template definition into different files where the template is complex and/or long. While we discourage the creation of long templates (see [Guidelines](guidelines.md)), sometimes the file itself becomes big and difficult to manage, so we can use YAML substitution to solve this by dividing the file into smaller ones.
 
-Furthermore, it allows whenever possible to reuse snippets of template without needing to rewrite them (e.g. [Table Schema layout](examples/TableSchemaLayout/table_schema_layout.md)).
+Furthermore, it allows whenever possible to reuse snippets of template without needing to rewrite them (e.g. [Table Schema layout](examples/TableSchemaLayout/tableSchemaLayout.md)).
 
 Let's see an example. Imagine we have the following structure:
 

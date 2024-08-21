@@ -1,3 +1,6 @@
+---
+sidebar_position: 2
+---
 # Form Layout
 
 While building templates, it is usually beneficial to improve them not only technically, but also visually. To improve the user experience of a Witboost user that needs to create a component, we can arrange the fields in a template using different layouts. Witboost support grouping common fields, creating horizontal layouts, and tables.
@@ -6,7 +9,7 @@ All examples shown here are taken from the accompanying [`layouts.yaml`](layouts
 
 ## Object layout
 
-As already explained in the [Basic Fields](../BasicFields/basic_fields.md#object-fields) example, we can group fields by creating nested objects in the template steps. This allows us to set a title and a description.
+As already explained in the [Basic Fields](../BasicFields/basicFields.md#object-fields) example, we can group fields by creating nested objects in the template steps. This allows us to set a title and a description.
 
 ```yaml
 numberFields:
@@ -157,7 +160,7 @@ tableExample:
 
 ![table_layout.png](img/table_layout.png)
 
-Check out how we use this layout to define [Table Schema layouts](../TableSchemaLayout/table_schema_layout.md) for specifying the shape and metadata of a table storing data.
+Check out how we use this layout to define [Table Schema layouts](../TableSchemaLayout/tableSchemaLayout.md) for specifying the shape and metadata of a table storing data.
 
 
 ## Markdown descriptions

@@ -1,3 +1,6 @@
+---
+sidebar_position: 1
+---
 # Form Template Basic Fields
 
 The basic fields are the foundation of any template: whether is a text field to write a component name, or a checkbox to indicate the presence of sensitive information, basic fields provide the easiest way to ask the user information but with the ability to be flexible enough for the different constraints that a form may have.
@@ -243,9 +246,11 @@ codeStyleField:
 
 You can create boolean fields which will store a `true` or `false` value. They come in two flavors: checkboxes/radio buttons and select widgets.
 
-!!! warning
-    If a `default` is not given, the field will store by default a `null` value, not a `false` value.
+:::warning
 
+If a `default` is not given, the field will store by default a `null` value, not a `false` value.
+
+:::
 
 - **Checkboxes/Radio buttons**
     ```yaml
@@ -279,8 +284,11 @@ You can create boolean fields which will store a `true` or `false` value. They c
     ```
     ![boolean_select_field.png](img/boolean_select_field.png)
 
-!!! info
-    As of Witboost 1.5.1, we are aware that the boolean select with custom names is currently presenting inconsistent behaviour. An alternative in the meantime would be using the string field with a [closed list of values](#closed-list-of-values).
+:::info
+
+As of Witboost 1.5.1, we are aware that the boolean select with custom names is currently presenting inconsistent behaviour. An alternative in the meantime would be using the string field with a [closed list of values](#closed-list-of-values).
+
+:::
 
 ## Array fields
 
@@ -366,4 +374,4 @@ You can also set required fields on objects, and you must define them at this le
 
 To understand how to add style to these objects in order to make better templates, check the [Layouts](../Layouts/layouts.md) examples.
 
-To understand how to leverage objects to retrieve information from other parts of the form using the DescriptorPicker, check the [Dynamic Select](../DynamicSelect/dynamic_select.md) examples.
+To understand how to leverage objects to retrieve information from other parts of the form using the DescriptorPicker, check the [Dynamic Select](../DynamicSelect/dynamicSelect.md) examples.

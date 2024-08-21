@@ -1,3 +1,6 @@
+---
+sidebar_position: 4
+---
 # OpenMetadata Table Schema Layout
 
 In most occasions, data is organized on tabular form, and many components, like Storages and Output Ports on Data Mesh, create tables or views to give a place for ingestion workloads to read and write data and for Output Ports to expose information to users or other systems. Because of this, the schema of the table is often present on the metadata of said components, and it is decided by the user when creating or editing it. Witboost recommends using the OpenMetadata Table specification whenever possible, including it itself on the Data Contract schema on its [Data Product specification](https://github.com/agile-lab-dev/Data-Product-Specification).
@@ -12,6 +15,6 @@ Here we provide an example yaml [`table_schema_layout.yaml`](table_schema_layout
 
 ![om_table_schema_layout](img/om_table_schema_layout.png)
 
-This field generates a `schemaDefinition` object with an array named `schemaColumns` containing the specification for each column. This nesting provides the possibility to use other pickers like the **DescriptorPicker** or the **EntitySelectionPicker** to perform operations on the table schema. See [Dynamic Select](../DynamicSelect/dynamic_select.md) for more information. 
+This field generates a `schemaDefinition` object with an array named `schemaColumns` containing the specification for each column. This nesting provides the possibility to use other pickers like the **DescriptorPicker** or the **EntitySelectionPicker** to perform operations on the table schema. See [Dynamic Select](../DynamicSelect/dynamicSelect.md) for more information. 
 
-This table layout is embedded on the [Base Storage](../BaseStorage/base_storage.md) and [Base Output Port](../BaseOutputPort/FullExperience/base_full_experience.md) examples.
+This table layout is embedded on the [Base Storage](../BaseComponents/BaseStorage/baseStorage.md) and [Base Output Port](../BaseComponents/BaseOutputPort/FullExperience/fullExperience.md) examples.

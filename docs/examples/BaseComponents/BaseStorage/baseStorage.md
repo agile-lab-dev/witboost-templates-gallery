@@ -1,3 +1,6 @@
+---
+sidebar_position: 10
+---
 # Base Storage Area
 
 Storage areas are one of the main components for the Data Mesh data platform taxonomy. They allow creating and handling the internal storage systems to manage data the data product needs to work.
@@ -21,7 +24,7 @@ You can use this folder as the base for a template repository and start developi
 
 ### Component metadata
 
-You might already be familiar with this section, as it is relatively stable across different kinds of components. To learn more about these fields, check the [Component Metadata](../ComponentMetadata/component_metadata.md) example.
+You might already be familiar with this section, as it is relatively stable across different kinds of components. To learn more about these fields, check the [Component Metadata](../ComponentMetadata/componentMetadata.md) example.
 
 ### Storage Area deployment information
 
@@ -55,10 +58,10 @@ Customize this section and further sections based on the requirements for the sp
 
 ### Table schema
 
-We propose to leverage the [Table Schema Layout](../TableSchemaLayout/table_schema_layout.md) example to define a table that the user can employ to define the schema of the table we created on this Storage. This follows the OpenMetadata table schema in order to have a consistent and coherent schema across all the components.
+We propose to leverage the [Table Schema Layout](../../TableSchemaLayout/tableSchemaLayout.md) example to define a table that the user can employ to define the schema of the table we created on this Storage. This follows the OpenMetadata table schema in order to have a consistent and coherent schema across all the components.
 
-![om_table_schema_layout.png](../TableSchemaLayout/img/om_table_schema_layout.png)
+![om_table_schema_layout.png](../../TableSchemaLayout/img/om_table_schema_layout.png)
 
 ### Repository location
 
-See the [Output Port Streamlined Experience](../BaseOutputPort/StreamlinedExperience/base_streamlined_experience.md#repository-location) for more information on how we calculate repository URLs to avoid asking the user this information.
+See the [Output Port Streamlined Experience](../BaseOutputPort/StreamlinedExperience/streamlinedExperience.md#repository-location) for more information on how we calculate repository URLs to avoid asking the user this information.

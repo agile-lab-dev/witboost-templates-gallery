@@ -2,9 +2,9 @@
 
 Output ports are one of the main components for the Data Mesh data platform taxonomy. They allow exposing the Data Product information to users using a well annotated and structured port, as well as handling access control.
 
-This example shows to its fullest extent the expected values for an Output Port, and although it's a full working example, we strongly recommend using a more [streamlined experience](../StreamlinedExperience/base_streamlined_experience.md) on creating Output Ports, as it leads to a better user experience as explained on the [Template creation guidelines](../../../guidelines.md). However, we propose this example to show how a complete Output Port template might look like (for example, to create the edit templates used on the Editor Wizard).
+This example shows to its fullest extent the expected values for an Output Port, and although it's a full working example, we strongly recommend using a more [streamlined experience](../StreamlinedExperience/streamlinedExperience.md) on creating Output Ports, as it leads to a better user experience as explained on the [Template creation guidelines](../../../../guidelines.md). However, we propose this example to show how a complete Output Port template might look like (for example, to create the edit templates used on the Editor Wizard).
 
-All examples shown here are taken from the accompanying [`base_full_experience.yaml`](base_full_experience.yaml) template file, which you can see live by following the steps explained [here](../../README.md#usage).
+All examples shown here are taken from the accompanying [`base_full_experience.yaml`](base_full_experience.yaml) template file, which you can see live by following the steps explained [here](../../../README.md#usage).
 
 You can see real life examples of this type of Output Port template on our [Witboost Starter Kit](https://github.com/agile-lab-dev/witboost-starter-kit):
 
@@ -26,7 +26,7 @@ You can use this folder as the base for a template repository and start developi
 
 ### Component metadata
 
-You might already be familiar with this section, as it is relatively stable across different kinds of components. To learn more about these fields, check the [Component Metadata](../../ComponentMetadata/component_metadata.md) example.
+You might already be familiar with this section, as it is relatively stable across different kinds of components. To learn more about these fields, check the [Component Metadata](../../ComponentMetadata/componentMetadata.md) example.
 
 ### Terms & Conditions and SLA
 
@@ -52,7 +52,7 @@ As part of the output port metadata, we should expose Data Sharing Agreement cla
 
 ### Data contract schema
 
-We propose to leverage the [Table Schema Layout](../../TableSchemaLayout/table_schema_layout.md) example to define a table that the user can employ to define the schema of the data exposed by this Output Port. This follows the OpenMetadata table schema in order to have a consistent and coherent schema across all the components.
+We propose to leverage the [Table Schema Layout](../../../TableSchemaLayout/tableSchemaLayout.md) example to define a table that the user can employ to define the schema of the data exposed by this Output Port. This follows the OpenMetadata table schema in order to have a consistent and coherent schema across all the components.
 
 ![data_contract_schema.png](img/data_contract_schema.png)
 
@@ -64,4 +64,4 @@ Customize this section and further sections based on the requirements for the sp
 
 ### Repository location
 
-See the [Streamlined Experience](../StreamlinedExperience/base_streamlined_experience.md#repository-location) for more information on how we calculate repository URLs to avoid asking the user this information.
+See the [Streamlined Experience](../StreamlinedExperience/streamlinedExperience.md#repository-location) for more information on how we calculate repository URLs to avoid asking the user this information.

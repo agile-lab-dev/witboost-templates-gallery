@@ -1,3 +1,6 @@
+---
+sidebar_position: 3
+---
 # Conditional fields
 
 When creating templates on Witboost, it is possible to define conditions which allow for different fields or sections to be shown based on user's input. This way, you can configure the template to ask for a different set of values based on a choice made by the user. 
@@ -53,7 +56,7 @@ We can add more if-then objects to it, ensuring the following aspects:
 1. If you add overlapping conditions, all the defined schemas inside true conditions will be shown.
 2. You can have the same field in two different conditions, but their type and configuration must be the same. Witboost doesn't allow for the same field to be rendered with different types on different conditions. If not followed, you might not see the condition working correctly, or see only one of the two renders on both conditions. See [Same field, different visual renders](../../templating_solutions.md#same-field-different-visual-renders) for more information.
 
-The following example is a simplified version of the [Table Schema Layout](../TableSchemaLayout/table_schema_layout.md) showing multiple if-then conditions:
+The following example is a simplified version of the [Table Schema Layout](../TableSchemaLayout/tableSchemaLayout.md) showing multiple if-then conditions:
 
 ```yaml
 items:
@@ -193,7 +196,7 @@ dependenciesSchedulingExample:
 
 Similarly to the allOf strategy, the `dependencies` keyword is at the `properties` level of the parent object, not nested with the other fields.
 
-You can see the structure being used in the [Streamlined Experience Output Port](../BaseOutputPort/StreamlinedExperience/base_streamlined_experience.md) when defining the component's data contract schema.
+You can see the structure being used in the [Streamlined Experience Output Port](../BaseComponents/BaseOutputPort/StreamlinedExperience/streamlinedExperience.md) when defining the component's data contract schema.
 
 ## Which one to use?
 

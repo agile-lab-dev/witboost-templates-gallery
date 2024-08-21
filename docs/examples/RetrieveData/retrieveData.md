@@ -1,3 +1,6 @@
+---
+sidebar_position: 5
+---
 # Retrieve Data
 
 On many cases, it is necessary to query pieces of information from existing sources, like from other entities in Witboost or from the same form, and saving them on the form context to be able to fill the new catalog-info with said information. There are several ways to retrieve information, but it is possible to summarize them in two strategies:
@@ -5,17 +8,17 @@ On many cases, it is necessary to query pieces of information from existing sour
 - From a defined object or entity, extract a value from it 
 - Retrieve a list of objects or entities from which the user can select the desired one.
 
-This example will focus on the first strategy. For understanding how to retrieve information from a source in order to present the user a set of choices, see [Dynamic Select](../DynamicSelect/dynamic_select.md).
+This example will focus on the first strategy. For understanding how to retrieve information from a source in order to present the user a set of choices, see [Dynamic Select](../DynamicSelect/dynamicSelect.md).
 
 In order to retrieve data from a specific known source, the **EntitySelectionPicker** is the field tailored for this purpose, allowing to choose a reference to a source of information (either from the current form or from an entity on the Witboost catalog, the latter with help of other pickers like the EntityPicker), and extract information from it.
 
-This guide explains how to retrieve values that are unique and don't need further input from the user to "choose" or refine the outcome value, including retrieving objects or arrays which are considered as single pieces of information and are not manipulated by the user, but rather only retrieving it from a source (and potentially mapping it to a new schema, see [Transforming Entities](../TransformingEntities/transforming_entities.md)).
+This guide explains how to retrieve values that are unique and don't need further input from the user to "choose" or refine the outcome value, including retrieving objects or arrays which are considered as single pieces of information and are not manipulated by the user, but rather only retrieving it from a source (and potentially mapping it to a new schema, see [Transforming Entities](../TransformingEntities/transformingEntities.md)).
 
 Retrieving data on forms is very useful as it allows our forms to do things like:
 
-- Retrieve metadata from other entities to align them, like setting the data product owner, development groups or other information from the data product to align all components to the root data product (see [Component Metadata](../ComponentMetadata/component_metadata.md))
+- Retrieve metadata from other entities to align them, like setting the data product owner, development groups or other information from the data product to align all components to the root data product (see [Component Metadata](../BaseComponents/ComponentMetadata/componentMetadata.md))
 - Read technical information from a storage area that an Output Ports depends on (or, more abstractly, a component that reads information from another component)
-- Schema inheritance (see [Base Output Port - Streamlined experience](../BaseOutputPort/StreamlinedExperience/base_streamlined_experience.md#data-contract-schema))
+- Schema inheritance (see [Base Output Port - Streamlined experience](../BaseComponents/BaseOutputPort/StreamlinedExperience/streamlinedExperience.md#data-contract-schema))
 - and much more...
 
 All examples shown here are taken from the accompanying [`retrieve_data.yaml`](retrieve_data.yaml) template file, which you can see live by following the steps explained [here](../README.md#usage).
@@ -68,14 +71,17 @@ editableTargetValue:
     allowArbitraryValues: true
 ```
 
-!!! info
-    You can only enable custom edition when the field is of `type: string`.
+:::info
+
+You can only enable custom edition when the field is of `type: string`.
+
+:::
 
 ## Catalog source
 
 One of the fundamentals of any template is the ability to link the newly created entity to others already existing on the catalog. For instance, when creating a Data Product the user must choose the domain it belongs to, so the template must have the capability of showing the existing domains in the platform and allowing the user to choose the appropriate one. Or when creating a component, it should know the Data Product it belongs to and extract relevant information from it that the component might need to save on its own metadata. 
 
-The **EntityPicker** covers the role of querying the catalog for a set of entities to show to the user and show them to the user (for more information see [Dynamic Select](../DynamicSelect/dynamic_select.md)). Then, the **EntitySelectionPicker** can query the entity referenced by the EntityPicker and retrieve the necessary information.
+The **EntityPicker** covers the role of querying the catalog for a set of entities to show to the user and show them to the user (for more information see [Dynamic Select](../DynamicSelect/dynamicSelect.md)). Then, the **EntitySelectionPicker** can query the entity referenced by the EntityPicker and retrieve the necessary information.
 
 ### Primitive field
 
@@ -134,11 +140,11 @@ spec:
 
 Use cases with other pickers:
 
-- When you need to select a component from the same data product and grab a value from it, use the **EntityRelationsPicker**. You can see an example on the [Base Output Port - Streamlined experience](../BaseOutputPort/StreamlinedExperience/base_streamlined_experience.md#data-contract-schema) where we show how to retrieve the table schema from another component and save it on the new one.
+- When you need to select a component from the same data product and grab a value from it, use the **EntityRelationsPicker**. You can see an example on the [Base Output Port - Streamlined experience](../BaseComponents/BaseOutputPort/StreamlinedExperience/streamlinedExperience.md#data-contract-schema) where we show how to retrieve the table schema from another component and save it on the new one.
 - When building lineage, and you need to pick information from a single component external to the data product, use a **ReadsFromPicker**.
 - When retrieving users belonging to a certain group or domain, use an **EntityRelationsPicker**.
 
-For more information and examples on how to configure these and other pickers, see [Dynamic Select](../DynamicSelect/dynamic_select.md).
+For more information and examples on how to configure these and other pickers, see [Dynamic Select](../DynamicSelect/dynamicSelect.md).
 
 ### Array field
 
@@ -169,4 +175,4 @@ multipleTargetValue:
 
 Here, by setting the `type` of the EntitySelectionPicker field to `array` and pointing the `ui:fieldName` to an `array` field, we instruct the form to map the input array by selection the selected `ui:property`. In this case, the field will be storing an array containing the display name of the selected users whose values we can see rendered on the field.
 
-To discover which other mapping operations the EntitySelectionPicker can do on retrieved arrays and objects, see [Transforming Entities](../TransformingEntities/transforming_entities.md).
+To discover which other mapping operations the EntitySelectionPicker can do on retrieved arrays and objects, see [Transforming Entities](../TransformingEntities/transformingEntities.md).
