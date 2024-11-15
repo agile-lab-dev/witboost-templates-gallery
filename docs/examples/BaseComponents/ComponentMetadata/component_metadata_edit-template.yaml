@@ -34,10 +34,6 @@ spec:
           type: string
           description: Not editable. The name of the component.
           ui:disabled: true
-        fullyQualifiedName:
-          title: Fully Qualified Name
-          type: string
-          description: Component fully qualified name
         description:
           title: Description
           type: string

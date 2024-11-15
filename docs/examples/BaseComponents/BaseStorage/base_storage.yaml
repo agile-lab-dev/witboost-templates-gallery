@@ -27,10 +27,6 @@ spec:
           default: Storage Area
           ui:options:
             allowArbitraryValues: true
-        fullyQualifiedName:
-          title: Fully Qualified Name
-          type: string
-          description: Component fully qualified name
         description:
           title: Description
           type: string
@@ -90,6 +86,22 @@ spec:
           default: []
           items:
             type: string
+        domainName:
+          type: string
+          ui:field: EntitySelectionPicker
+          ui:fieldName: domain
+          ui:property: spec.mesh.name
+          ui:options:
+            allowArbitraryValues: false
+          ui:widget: hidden
+        dataproductName:
+          type: string
+          ui:field: EntitySelectionPicker
+          ui:fieldName: dataproduct
+          ui:property: spec.mesh.name
+          ui:options:
+            allowArbitraryValues: false
+          ui:widget: hidden
 
 
     - title: Storage Area deployment information
@@ -318,7 +330,8 @@ spec:
         targetPath: '.'
         values:
           name: '${{ parameters.name }}'
-          fullyQualifiedName: '${{ parameters.fullyQualifiedName }}'
+          domainName: '${{ parameters.domainName }}'
+          dataproductName: '${{ parameters.dataproductName }}'
           description: '${{ parameters.description }}'
           domain: '${{ parameters.domain }}'
           dataproduct: '${{ parameters.dataproduct }}'

@@ -27,10 +27,6 @@ spec:
           default: Output Port
           ui:options:
             allowArbitraryValues: true
-        fullyQualifiedName:
-          title: Fully Qualified Name
-          type: string
-          description: Output port fully qualified name
         description:
           title: Description
           type: string
@@ -91,6 +87,22 @@ spec:
           default: [ ]
           items:
             type: string
+        domainName:
+          type: string
+          ui:field: EntitySelectionPicker
+          ui:fieldName: domain
+          ui:property: spec.mesh.name
+          ui:options:
+            allowArbitraryValues: false
+          ui:widget: hidden
+        dataproductName:
+          type: string
+          ui:field: EntitySelectionPicker
+          ui:fieldName: dataproduct
+          ui:property: spec.mesh.name
+          ui:options:
+            allowArbitraryValues: false
+          ui:widget: hidden
 
     - title: Terms & Conditions and SLA
       description: Terms & Conditions and Service Level Agreement information for this component.
@@ -379,7 +391,6 @@ spec:
         targetPath: '.'
         values:
           name: '${{ parameters.name }}'
-          fullyQualifiedName: '${{ parameters.fullyQualifiedName }}'
           description: '${{ parameters.description }}'
           domain: '${{ parameters.domain }}'
           dataproduct: '${{ parameters.dataproduct }}'
@@ -411,6 +422,9 @@ spec:
           displayName: '${{ parameters.displayName }}'
           artifact_id: '${{ parameters.name }}'
           useCaseTemplateVersion: 0.0.0
+          domainName: '${{ parameters.domainName }}'
+          dataproductName: '${{ parameters.dataproductName }}'
+
 
     - id: publish
       name: Publish
